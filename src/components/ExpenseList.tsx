@@ -13,6 +13,10 @@ export default function ExpenseList() {
         {isEmpty ? <p className="text-gray-600 text-2xl font-bold">No hay gastos</p> : (
             <>
                 <p className="text-gray-600 text-2xl font-bold my-5">Listado de gastos</p>
+                <div className="flex justify-between mb-2">
+                    <span className="text-green-600 font-bold text-sm">Editar gasto (swipe hacia la derecha)</span>
+                    <span className="text-red-600 font-bold text-sm">Eliminar gasto (swipe hacia la izquierda)</span>
+                </div>
                 {filteredExpenses.map(expense => (
                     <ExpenseDetail
                         key={expense.id}
