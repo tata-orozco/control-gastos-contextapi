@@ -47,19 +47,21 @@ export default function ExpenseForm() {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        // Validar
         if(Object.values(expense).includes('')) {
             setError('Todos los campos son obligatorios')
             return;
         }
 
-        // Validar que no me pase del límite
         if((expense.amount - previousAmount) > remainingBudget) {
             setError('El gasto se sale del presupuesto')
             return;
         }
 
-        // Agregar o actualizar el gasto
+        if(expense.amount <= 0) {
+            setError('Ingrese una cantidad válida mayor a 0')
+            return
+        }
+
         if(state.editingId) {
             dispatch({type: 'update-expense', payload: {expense: {id: state.editingId, ...expense}}})
         } else {
@@ -166,7 +168,7 @@ export default function ExpenseForm() {
 
         <input
             type="submit"
-            className="bg-blue-600 cursor-pointer w-full p-2 text-white uppercase font-bold rounded-lg"
+            className="bg-blue-600 cursor-pointer w-full p-2 text-white uppercase font-bold rounded-lg hover:bg-blue-500"
             value={state.editingId ? 'Guardar Cambios' : 'Registrar gasto'}
         />
     </form>

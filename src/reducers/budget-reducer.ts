@@ -38,7 +38,7 @@ export const initialState : BudgetState = {
     currentCategory: ''
 }
 
-const createExpense = (draftExpense: DraftExpense) : Expense => {
+const createExpense = (draftExpense: DraftExpense) => {
     return {
         ...draftExpense,
         id: uuidv4()

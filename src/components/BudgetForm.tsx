@@ -3,21 +3,25 @@ import { useBudget } from "../hooks/useBudget"
 
 export default function BudgetForm() {
 
-    const [budget, setBudget] = useState(0)
+    const [budget, setBudget] = useState<string>('0')
     const {dispatch} = useBudget()
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setBudget(+e.target.value)
+        setBudget(e.target.value)
     }
 
     const isValid = useMemo(() => {
-        return isNaN(budget) || budget <= 0
+        const budgetValue = parseFloat(budget) 
+        return isNaN(budgetValue) || budgetValue <= 0
     }, [budget])
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         
-        dispatch({type:'add-budget', payload:{budget}})
+        const budgetValue = parseFloat(budget)
+        if (!isNaN(budgetValue) && budgetValue > 0) {
+            dispatch({ type: 'add-budget', payload: { budget: budgetValue } })
+        }
     }
 
   return (
