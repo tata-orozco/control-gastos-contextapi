@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment, useMemo } from 'react'
 import { PlusCircleIcon } from '@heroicons/react/24/solid'
 import { Dialog, Transition } from '@headlessui/react'
 import { useBudget } from '../hooks/useBudget'
@@ -6,15 +6,18 @@ import ExpenseForm from './ExpenseForm'
 
 export default function ExpenseModal() {
 
-  const {state, dispatch} = useBudget()
+  const {state, dispatch, remainingBudget} = useBudget()
+
+  const noRemainingBudget = useMemo(() => remainingBudget === 0, [state.expenses])
 
   return (
     <>
       <div className="fixed right-5 bottom-5 flex items-center justify-center">
         <button
           type="button"
-          className='flex justify-center items-center'
+          className='flex justify-center items-center disabled:opacity-55'
           onClick={() => dispatch({type: 'show-modal'})}
+          disabled={noRemainingBudget}
         >
             <span className='text-green-600 font-black'>Agregar Gasto</span>
             <PlusCircleIcon className='w-16 h-16 text-green-600 rounded-full' />
