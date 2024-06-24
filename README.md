@@ -1,4 +1,4 @@
-# Simulá tu crédito
+# Expense Manager
 
 Para correr el sitio localmente:
 
